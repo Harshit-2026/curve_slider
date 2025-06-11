@@ -7,8 +7,6 @@ class CurvedSliderState extends Equatable {
   final double max;
   final double curvature;
   final int totalTicks;
-  final double availableBalance;
-  final String currencyUnit;
 
   const CurvedSliderState({
     this.sliderValue = 0,
@@ -17,12 +15,10 @@ class CurvedSliderState extends Equatable {
     this.max = 0.005,
     this.curvature = 100,
     this.totalTicks = 30,
-    this.availableBalance=0.000927,
-    this.currencyUnit="BTC"
   });
 
   @override
-  List<Object?> get props => [sliderValue, min, max, curvature, totalTicks, availableBalance, currencyUnit];
+  List<Object?> get props => [sliderValue, min, max, curvature, totalTicks];
 
   CurvedSliderState copyWith({
     double? sliderValue,
@@ -31,8 +27,6 @@ class CurvedSliderState extends Equatable {
     double? max,
     double? curvature,
     int? totalTicks,
-    double? availableBalance,
-    String? currencyUnit,
   }) {
     return CurvedSliderState(
       sliderValue: sliderValue ?? this.sliderValue,
@@ -41,8 +35,6 @@ class CurvedSliderState extends Equatable {
       max: max ?? this.max,
       curvature: curvature ?? this.curvature,
       totalTicks: totalTicks ?? this.totalTicks,
-      availableBalance: availableBalance ?? this.availableBalance,
-      currencyUnit: currencyUnit ?? this.currencyUnit,
     );
   }
 }

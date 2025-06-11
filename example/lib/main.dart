@@ -19,7 +19,6 @@ class MyApp extends StatelessWidget {
           max: 0.005,
           curvature: 120,
           totalTicks: 40,
-          availableBalance: 0.00997,
           thumbImage: 'assets/images/fingerprint.png',
           tickSound: 'sounds/tick.mp3',
           onChanged: (value) {

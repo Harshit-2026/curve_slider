@@ -9,7 +9,6 @@ A customizable and interactive curved slider widget for Flutter, designed with a
 - 🧮 Curved slider path using quadratic Bézier
 - 🖼️ Custom thumb image
 - 🔊 Optional tick sound on change
-- 💰 Shows available balance and currency unit
 - 🎨 Fully themeable and responsive
 - 🔄 `onChanged` callback to return slider value on drag/text input
 
@@ -31,14 +30,14 @@ dependencies:
 
 Here's a minimal example of how to use the `CurveSlider` widget:
 
-```example
+```markdown
+```dart
 CurveSliderView(
           initialValue: 0.002,
           min: 0.001,
           max: 0.005,
           curvature: 120,
           totalTicks: 40,
-          availableBalance: 0.00997,
           thumbImage: 'assets/images/fingerprint.png',
           tickSound: 'sounds/tick.mp3',
           onChanged: (value) {
