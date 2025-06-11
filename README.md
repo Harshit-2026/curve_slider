@@ -23,7 +23,7 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  curve_slider: ^1.0.0
+  curve_slider: ^0.0.3
 ```
 
 ## 💡 Example
