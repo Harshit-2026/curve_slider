@@ -30,7 +30,6 @@ dependencies:
 
 Here's a minimal example of how to use the `CurveSlider` widget:
 
-```markdown
 ```dart
 CurveSliderView(
           initialValue: 0.002,
@@ -44,4 +43,4 @@ CurveSliderView(
             debugPrint("on change: $value");
           },
         )
-```
+
