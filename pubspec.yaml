@@ -1,0 +1,28 @@
+name: curve_slider
+description: "Curve slider animation"
+version: 0.0.1
+homepage: https://github.com/Harshit-2026/curve_slider.git
+
+environment:
+  sdk: ^3.8.0
+  flutter: ">=1.17.0"
+
+dependencies:
+  equatable: ^2.0.7
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.1.1
+  gap: ^3.0.1
+  audioplayers: ^6.4.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+
+flutter:
+  assets:
+    - assets/images/
+    - assets/sounds/
