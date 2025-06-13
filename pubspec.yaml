@@ -1,6 +1,6 @@
 name: curve_slider
-description: "Curve slider animation"
-version: 0.0.3
+description: "Interactive curved slider with sound and haptic support."
+version: 0.0.4
 homepage: https://github.com/Harshit-2026/curve_slider.git
 
 environment:

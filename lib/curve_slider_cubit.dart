@@ -8,7 +8,7 @@ class CurveSliderCubit extends Cubit<CurvedSliderState> {
   final String? tickSound;
   final ValueChanged<double>? onChanged;
 
-  CurveSliderCubit(super.initialState, {this.tickSound,this.onChanged}) {
+  CurveSliderCubit(super.initialState, {this.tickSound, this.onChanged}) {
     _initAudio();
   }
 
@@ -53,7 +53,10 @@ class CurveSliderCubit extends Cubit<CurvedSliderState> {
     }
 
     final newValue = state.min + (state.max - state.min) * bestT;
-    final currentTick = ((bestT * state.totalTicks).round()).clamp(0, state.totalTicks);
+    final currentTick = ((bestT * state.totalTicks).round()).clamp(
+      0,
+      state.totalTicks,
+    );
     if (currentTick != _lastPlayedTick) {
       _lastPlayedTick = currentTick;
       _playTickSound();
@@ -62,7 +65,9 @@ class CurveSliderCubit extends Cubit<CurvedSliderState> {
     if ((state.sliderValue - newValue).abs() > 0.00001) {
       final controller = state.textEditingController;
       controller.text = newValue.toStringAsFixed(6);
-      controller.selection = TextSelection.collapsed(offset: controller.text.length);
+      controller.selection = TextSelection.collapsed(
+        offset: controller.text.length,
+      );
       emit(state.copyWith(sliderValue: newValue));
       onChanged?.call(newValue);
     }
@@ -71,7 +76,8 @@ class CurveSliderCubit extends Cubit<CurvedSliderState> {
   void _playTickSound() {
     if (_playerPool.isEmpty) return;
     final now = DateTime.now();
-    if (_lastTickTime == null || now.difference(_lastTickTime!) > const Duration(milliseconds: 30)) {
+    if (_lastTickTime == null ||
+        now.difference(_lastTickTime!) > const Duration(milliseconds: 30)) {
       _lastTickTime = now;
       HapticFeedback.selectionClick();
       final player = _playerPool[_poolIndex];
@@ -83,9 +89,18 @@ class CurveSliderCubit extends Cubit<CurvedSliderState> {
     }
   }
 
-  Offset _quadraticBezier(double x0, double y0, Offset control, double x2, double y2, double t) {
-    final x = pow(1 - t, 2) * x0 + 2 * (1 - t) * t * control.dx + pow(t, 2) * x2;
-    final y = pow(1 - t, 2) * y0 + 2 * (1 - t) * t * control.dy + pow(t, 2) * y2;
+  Offset _quadraticBezier(
+    double x0,
+    double y0,
+    Offset control,
+    double x2,
+    double y2,
+    double t,
+  ) {
+    final x =
+        pow(1 - t, 2) * x0 + 2 * (1 - t) * t * control.dx + pow(t, 2) * x2;
+    final y =
+        pow(1 - t, 2) * y0 + 2 * (1 - t) * t * control.dy + pow(t, 2) * y2;
     return Offset(x.toDouble(), y.toDouble());
   }
 }

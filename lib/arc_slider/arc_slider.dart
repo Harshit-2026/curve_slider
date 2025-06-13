@@ -10,7 +10,13 @@ class ArcSliderPainter extends CustomPainter {
   final double curvature;
   final ui.Image? image;
 
-  ArcSliderPainter({required this.value, required this.min, required this.max, required this.curvature, this.image});
+  ArcSliderPainter({
+    required this.value,
+    required this.min,
+    required this.max,
+    required this.curvature,
+    this.image,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -66,12 +72,22 @@ class ArcSliderPainter extends CustomPainter {
 
     // Thumb
     double t = ((value - min) / (max - min)).clamp(0.0, 1.0);
-    final thumbOffset = _quadraticBezier(startX, baseY, controlPoint, endX, baseY, t);
+    final thumbOffset = _quadraticBezier(
+      startX,
+      baseY,
+      controlPoint,
+      endX,
+      baseY,
+      t,
+    );
 
     // Draw image if provided
     if (image != null) {
       const double imageSize = 50;
-      final imageOffset = Offset(thumbOffset.dx - imageSize * 0.5, thumbOffset.dy - imageSize * 0.5);
+      final imageOffset = Offset(
+        thumbOffset.dx - imageSize * 0.5,
+        thumbOffset.dy - imageSize * 0.5,
+      );
       canvas.drawImageRect(
         image!,
         Rect.fromLTWH(0, 0, image!.width.toDouble(), image!.height.toDouble()),
@@ -81,9 +97,18 @@ class ArcSliderPainter extends CustomPainter {
     }
   }
 
-  Offset _quadraticBezier(double x0, double y0, Offset control, double x2, double y2, double t) {
-    final x = pow(1 - t, 2) * x0 + 2 * (1 - t) * t * control.dx + pow(t, 2) * x2;
-    final y = pow(1 - t, 2) * y0 + 2 * (1 - t) * t * control.dy + pow(t, 2) * y2;
+  Offset _quadraticBezier(
+    double x0,
+    double y0,
+    Offset control,
+    double x2,
+    double y2,
+    double t,
+  ) {
+    final x =
+        pow(1 - t, 2) * x0 + 2 * (1 - t) * t * control.dx + pow(t, 2) * x2;
+    final y =
+        pow(1 - t, 2) * y0 + 2 * (1 - t) * t * control.dy + pow(t, 2) * y2;
     return Offset(x.toDouble(), y.toDouble());
   }
 

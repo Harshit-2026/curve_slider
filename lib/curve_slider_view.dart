@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'arc_slider/arc_slider.dart';
 
 part 'curve_slider_state.dart';
+
 part 'curve_slider_cubit.dart';
 
 class CurveSliderView extends StatefulWidget {
@@ -21,6 +22,10 @@ class CurveSliderView extends StatefulWidget {
   final String? thumbImage;
   final String? tickSound;
   final ValueChanged<double>? onChanged;
+  final bool showValue;
+  final double spaceDifference;
+  final double? height;
+  final double? width;
 
   const CurveSliderView({
     super.key,
@@ -29,9 +34,13 @@ class CurveSliderView extends StatefulWidget {
     this.max = 0.005,
     this.curvature = 100,
     this.totalTicks = 30,
-    this.thumbImage="assets/images/fingerprint.png",
-    this.tickSound='sounds/tick.mp3',
+    this.thumbImage = "assets/images/fingerprint.png",
+    this.tickSound = 'sounds/tick.mp3',
     this.onChanged,
+    this.showValue = true,
+    this.spaceDifference = 48,
+    this.height,
+    this.width,
   });
 
   @override
@@ -61,12 +70,13 @@ class _CurveSliderViewState extends State<CurveSliderView> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider<CurveSliderCubit>(
       create: (context) => CurveSliderCubit(
         CurvedSliderState(
           sliderValue: widget.initialValue.clamp(widget.min, widget.max),
-          textEditingController: TextEditingController(text: widget.initialValue.toStringAsFixed(6)),
+          textEditingController: TextEditingController(
+            text: widget.initialValue.toStringAsFixed(6),
+          ),
           min: widget.min,
           max: widget.max,
           curvature: widget.curvature,
@@ -83,31 +93,57 @@ class _CurveSliderViewState extends State<CurveSliderView> {
               return Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  TextField(
-                    controller: state.textEditingController,
-                    onChanged: (text) => context.read<CurveSliderCubit>().updateFromText(text),
-                    onTapOutside: (_) => FocusScope.of(context).requestFocus(FocusNode()),
-                    keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                    inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d{0,6}'))],
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(fontSize: 36, fontWeight: FontWeight.bold, color: Colors.white),
-                    decoration: const InputDecoration(border: InputBorder.none),
-                  ),
+                  if (widget.showValue) ...[
+                    TextField(
+                      controller: state.textEditingController,
+                      onChanged: (text) =>
+                          context.read<CurveSliderCubit>().updateFromText(text),
+                      onTapOutside: (_) =>
+                          FocusScope.of(context).requestFocus(FocusNode()),
+                      keyboardType: const TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d{0,6}'),
+                        ),
+                      ],
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                        fontSize: 36,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                      ),
+                    ),
 
-                  const SizedBox(height: 48),
+                    SizedBox(height: widget.spaceDifference),
+                  ],
                   Stack(
                     alignment: Alignment.bottomCenter,
                     children: [
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onPanUpdate: (details) {
-                          final box = _paintKey.currentContext!.findRenderObject() as RenderBox;
-                          final local = box.globalToLocal(details.globalPosition);
-                          context.read<CurveSliderCubit>().updateSliderByTouch(local, box.size);
+                          final box =
+                              _paintKey.currentContext!.findRenderObject()
+                                  as RenderBox;
+                          final local = box.globalToLocal(
+                            details.globalPosition,
+                          );
+                          context.read<CurveSliderCubit>().updateSliderByTouch(
+                            local,
+                            box.size,
+                          );
                         },
                         child: CustomPaint(
                           key: _paintKey,
-                          size: Size(MediaQuery.of(context).size.width, 200),
+                          size: Size(
+                            widget.width ?? MediaQuery.of(context).size.width,
+                            widget.height ?? 200,
+                          ),
                           painter: ArcSliderPainter(
                             value: state.sliderValue,
                             min: state.min,
@@ -115,7 +151,12 @@ class _CurveSliderViewState extends State<CurveSliderView> {
                             curvature: state.curvature,
                             image: _image,
                           ),
-                          child: SizedBox(width: MediaQuery.of(context).size.width, height: 200),
+                          child: SizedBox(
+                            width:
+                                widget.width ??
+                                MediaQuery.of(context).size.width,
+                            height: widget.height ?? 200,
+                          ),
                         ),
                       ),
                     ],

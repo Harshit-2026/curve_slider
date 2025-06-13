@@ -30,7 +30,8 @@ class CurvedSliderState extends Equatable {
   }) {
     return CurvedSliderState(
       sliderValue: sliderValue ?? this.sliderValue,
-      textEditingController: textEditingController ?? this.textEditingController,
+      textEditingController:
+          textEditingController ?? this.textEditingController,
       min: min ?? this.min,
       max: max ?? this.max,
       curvature: curvature ?? this.curvature,

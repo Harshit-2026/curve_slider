@@ -5,12 +5,14 @@ A customizable and interactive curved slider widget for Flutter, designed with a
 
 ## 🚀 Features
 
-- 🎯 Adjustable `min`, `max`, and `initialValue`
-- 🧮 Curved slider path using quadratic Bézier
-- 🖼️ Custom thumb image
-- 🔊 Optional tick sound on change
-- 🎨 Fully themeable and responsive
-- 🔄 `onChanged` callback to return slider value on drag/text input
+- 🎯 Adjustable `min`, `max`, `initialValue`, and `totalTicks`
+- 🧮 Curved path using quadratic Bézier curves
+- 🖼️ Support for custom thumb image
+- 🔊 Tick sound on value change (optional)
+- 🌈 Fully themeable & responsive layout
+- 📉 Optional text field for value input
+- 🔄 Real-time `onChanged` callback
+- 🤏 Haptic feedback support (via `HapticFeedback.selectionClick()`)
 
 ## Getting started
 
@@ -23,14 +25,14 @@ Add this to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  curve_slider: ^0.0.3
+  curve_slider: ^0.0.4
 ```
 
 ## 💡 Example
 
 Here's a minimal example of how to use the `CurveSlider` widget:
 
-```dart
+```dart@
 CurveSliderView(
           initialValue: 0.002,
           min: 0.001,
@@ -43,4 +45,8 @@ CurveSliderView(
             debugPrint("on change: $value");
           },
         )
+```
 
+## 🛠 Maintainers
+
+Built and maintained by [Harshit Rajput](https://github.com/Harshit2027)
